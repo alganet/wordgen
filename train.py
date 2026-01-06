@@ -179,7 +179,7 @@ for epoch in range(start_epoch, epochs + 1):
         inputs, targets = inputs.to(device), targets.to(device)
         optimizer.zero_grad()
         outputs = model(inputs)
-        loss = criterion(outputs.view(-1, vocab_size), targets.view(-1))
+        loss = criterion(outputs.reshape(-1, vocab_size), targets.reshape(-1))
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
@@ -196,7 +196,7 @@ for epoch in range(start_epoch, epochs + 1):
             targets = batch[0][:, 1:]
             inputs, targets = inputs.to(device), targets.to(device)
             outputs = model(inputs)
-            loss = criterion(outputs.view(-1, vocab_size), targets.view(-1))
+            loss = criterion(outputs.reshape(-1, vocab_size), targets.reshape(-1))
             val_loss += loss.item()
     print(f'Val Loss: {val_loss / len(val_loader):.4f}')
 
